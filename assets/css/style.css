@@ -52,6 +52,7 @@
     margin: 10px;
     height: 289px;
     width: 300px;
+    border-radius: 10px;
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.7);
 }
 

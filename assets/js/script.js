@@ -1,8 +1,60 @@
+function getAge(dateString) {
+    var today = new Date();
+    var DOB = new Date(dateString);
+    var totalMonths = (today.getFullYear() - DOB.getFullYear()) * 12 + today.getMonth() - DOB.getMonth();
+    totalMonths += today.getDay() < DOB.getDay() ? -1 : 0;
+    var years = today.getFullYear() - DOB.getFullYear();
+    if (DOB.getMonth() > today.getMonth())
+        years = years - 1;
+    else if (DOB.getMonth() === today.getMonth())
+        if (DOB.getDate() > today.getDate())
+            years = years - 1;
+
+    var days;
+    var months;
+
+    if (DOB.getDate() > today.getDate()) {
+        months = (totalMonths % 12);
+        if (months == 0)
+            months = 11;
+        var x = today.getMonth();
+        switch (x) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12: {
+                var a = DOB.getDate() - today.getDate();
+                days = 31 - a;
+                break;
+            }
+            default: {
+                var a = DOB.getDate() - today.getDate();
+                days = 30 - a;
+                break;
+            }
+        }
+
+    }
+    else {
+        days = today.getDate() - DOB.getDate();
+        if (DOB.getMonth() === today.getMonth())
+            months = (totalMonths % 12);
+        else
+            months = (totalMonths % 12) + 1;
+    }
+    var age = years + ' years ' + months + ' months ' + days + ' days';
+    return age;
+}
+
 function ageInDays () {
-    let birthYear = prompt("What's your birth year....good friend? ");
-    let ageInDayss = (2022 - birthYear) * 365;
+    document.getElementById("flex-box-result").innerHTML= '';
+    let dob = prompt("What's your date of birth [yyyy/mm/dd] good friend?");
+    let age = getAge(dob);
     let h1 = document.createElement("h1");
-    let textAnswer = document.createTextNode(`You are ${ageInDayss} days old!`)
+    let textAnswer = document.createTextNode(`You are ${age} days old!`)
     h1.setAttribute('id', 'ageInDays');
     h1.appendChild(textAnswer);
     document.getElementById("flex-box-result").appendChild(h1);
@@ -20,6 +72,7 @@ const generateCat = () => {
 }
 
 const showCat = (cat) => {
+    document.getElementById("flex-cat-gen").innerHTML = '';
     let image = document.createElement("img");
     let div = document.getElementById("flex-cat-gen");
     image.src = cat;
