@@ -52,12 +52,28 @@ function getAge(dateString) {
 function ageInDays () {
     document.getElementById("flex-box-result").innerHTML= '';
     let dob = prompt("What's your date of birth [yyyy/mm/dd] good friend?");
-    let age = getAge(dob);
-    let h1 = document.createElement("h1");
-    let textAnswer = document.createTextNode(`You are ${age} days old!`)
-    h1.setAttribute('id', 'ageInDays');
-    h1.appendChild(textAnswer);
-    document.getElementById("flex-box-result").appendChild(h1);
+    
+    let regexVar = new RegExp("([0-9]{4})\/([0-9]{2})\/([0-9]{2})");
+
+    let opera = dob.split('/');
+ 
+    let dd = parseInt(opera[2]);
+    let mm  = parseInt(opera[1]);
+    let yy = parseInt(opera[0]);
+
+    if (yy == 0000 || (mm == 00 || mm > 12) || (dd == 00 || dd > 31)) {
+        alert("Invalid DOB input!");
+    }
+    else if (regexVar.test(dob)) {
+        let age = getAge(dob);
+        let h1 = document.createElement("h1");
+        let textAnswer = document.createTextNode(`You are ${age} days old!`)
+        h1.setAttribute('id', 'ageInDays');
+        h1.appendChild(textAnswer);
+        document.getElementById("flex-box-result").appendChild(h1);
+
+    }else alert("Enter valid DOB following the pattern yyyy/mm/dd");
+
 }
 
 function reset () {
